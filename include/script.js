@@ -57,8 +57,12 @@ $weatherCity.addEventListener("click", event => {
     let weatherId  = $this.dataset.weatherid;
     let classNames = $this.className;
     if (classNames.indexOf("btn-delete") != -1) {
-        // Suppression de la fiche météo
-        deleteWeather(weatherId);
+        if (weatherId > -1) {
+            // Suppression de la fiche météo
+            deleteWeather(weatherId);
+        } else {
+            deleteWeatherRow(weatherId);
+        }
     }
 })
 /**
@@ -179,11 +183,18 @@ async function deleteWeather (weatherId) {
         .then(json => {
             if (json.deleted) {
                 // Supprime la ligne
-                document.querySelectorAll(".row[data-weatherid='"+weatherId+"']").forEach(element => {
-                    element.innerHTML = '';
-                });
+                deleteWeatherRow(weatherId);
             }
         })
         .catch(err => console.log(err));
     }
+}
+/**
+ * Supprime la ligne html de la météo
+ */
+function deleteWeatherRow (weatherId) {
+    // Supprime la ligne
+    document.querySelectorAll(".row[data-weatherid='"+weatherId+"']").forEach(element => {
+        element.innerHTML = '';
+    });
 }
