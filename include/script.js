@@ -90,8 +90,8 @@ $btnAdd.forEach(element => {
         let id = event.target.id
         if (id == "btn-add-city") {
             addCityRow();
-        } else {
-            
+        } else if (id == "btn-add-weather") {
+            addWeatherRow();
         }
     })
 });
@@ -111,6 +111,24 @@ async function addCityRow () {
     .then(response => response.json()) 
     .then(json => {
         $allCities.insertAdjacentHTML("afterBegin",json.html);
+    })
+    .catch(err => console.log(err));
+}
+var nbWeatherAdded = 0;
+/**
+ * Création via ajax de la nouvelle ligne html
+ */
+async function addWeatherRow () {
+    let formData = new FormData();
+    formData.append("mode", "add_weather");
+    formData.append("nbWeatherAdded", --nbWeatherAdded);
+    fetch('ajax.php', {
+        method: "POST",
+        body  : formData,
+    })
+    .then(response => response.json()) 
+    .then(json => {
+        $weatherCity.insertAdjacentHTML("afterBegin",json.html);
     })
     .catch(err => console.log(err));
 }
