@@ -1,0 +1,75 @@
+body {
+    font-family: "Poppins",sans-serif !important;
+    background-color: rgba(13,132,255,.03);
+}
+
+.container, 
+.btn {
+    cursor: pointer;
+}
+.container {
+    min-width: 780px !important;
+    max-width: 1250px !important;
+    border-radius: 24px;
+    margin: 2rem 1.5rem;
+    height: auto;
+    background-color: #fff;
+    padding: 1rem;
+    box-shadow: 3px 3px 10px #00000015;
+}
+.wrap {
+    display: flex;
+    justify-content: center;
+}
+.row {
+    display: flex;
+}
+.row:hover:not(.header) {
+    background-color: lightgray !important;
+}
+.row:nth-child(odd):not(.header) {
+    background-color: #eeeeee;
+}
+.col {
+    padding: .5rem;
+    width: 100%;
+    text-align: center;
+}
+.header {
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: grey;
+    color: #fff;
+}
+main > h1 {
+    text-align: center;
+}
+main > div  {
+    display: flex;
+}
+.btn {
+    color: #fff;
+    border-radius: 9px !important;
+    padding: 10px 13px !important;
+    font-size: .875rem !important;
+    font-weight: 500 !important;
+    transition: .3s;
+    border-style: unset;
+}
+.btn-edit {
+    background-color: #27c9d6;
+    border: 1px solid #27c9d6;
+}
+.btn-edit:hover {
+    background-color: #fff;
+    color: #27c9d6;
+}
+.btn-delete {
+    color: #333;
+    background-color: #e8f1fa;
+    border: 1px solid #e8f1fa;
+}
+.btn-delete:hover {
+    background-color: #fff;
+    border-color: #333;
+}
