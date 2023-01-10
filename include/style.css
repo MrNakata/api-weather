@@ -49,10 +49,10 @@ main > div  {
 }
 .btn {
     color: #fff;
-    border-radius: 9px !important;
-    padding: 10px 13px !important;
-    font-size: .875rem !important;
-    font-weight: 500 !important;
+    border-radius: 9px;
+    padding: 9px 13px;
+    font-size: .875rem;
+    font-weight: 500;
     transition: .3s;
     border-style: unset;
 }
@@ -72,4 +72,14 @@ main > div  {
 .btn-delete:hover {
     background-color: #fff;
     border-color: #333;
+}
+.btn-add {
+    color: #333;
+    font-size: 1.4rem;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+.btn-save {
+    color: #333;
+    background-color: #ffb12a;
 }
