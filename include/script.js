@@ -42,8 +42,13 @@ $allCities.addEventListener("click", event => {
         if (classNames.indexOf("btn-edit") != -1) {
             // Clic sur btn modifier
         } else if (classNames.indexOf("btn-delete") != -1) {
-            // Clic sur btn supprimer
-            deleteCity(cityId);
+            if (cityId > -1) {
+                // Supprime la ville de la bdd
+                deleteCity(cityId);
+            } else {
+                // Supprime la ligne uniquement
+                deleteCityRow(cityId)
+            }
         }
     }
 });
@@ -75,7 +80,40 @@ async function getWeather (cityId) {
         .catch(err => console.log(err));
     }
 }
+/**
+ * Clic sur un bouton Ajouter
+ * Ajoute une nouvelle ligne
+ */
+const $btnAdd = document.querySelectorAll(".btn-add");
+$btnAdd.forEach(element => {
+    element.addEventListener("click", event => {
+        let id = event.target.id
+        if (id == "btn-add-city") {
+            addCityRow();
+        } else {
+            
+        }
+    })
+});
 
+var nbCityAdded = 0;
+/**
+ * Création via ajax de la nouvelle ligne html
+ */
+async function addCityRow () {
+    let formData = new FormData();
+    formData.append("mode", "add_city");
+    formData.append("nbCityAdded", --nbCityAdded);
+    fetch('ajax.php', {
+        method: "POST",
+        body  : formData,
+    })
+    .then(response => response.json()) 
+    .then(json => {
+        $allCities.insertAdjacentHTML("afterBegin",json.html);
+    })
+    .catch(err => console.log(err));
+}
 /**
  * Suppression d'une ville et des fiches météos liées
  */
@@ -92,15 +130,21 @@ async function deleteCity (cityId) {
         .then(json => {
             if (json.deleted) {
                 // Supprime la ligne
-                document.querySelectorAll(".row[data-cityid='"+cityId+"']").forEach(element => {
-                    element.innerHTML = '';
-                });
+                deleteCityRow(cityId);       
             }
         })
         .catch(err => console.log(err));
     }
 }
-
+/**
+ * Supprime la ligne html de la ville
+ */
+function deleteCityRow (cityId) {
+    // Supprime la ligne
+    document.querySelectorAll(".row[data-cityid='"+cityId+"']").forEach(element => {
+        element.innerHTML = '';
+    });
+}
 /**
  * Suppression d'une fiche météo
  */

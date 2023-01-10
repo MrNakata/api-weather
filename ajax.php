@@ -58,6 +58,27 @@ if (isset($_POST['mode'])) {
         $isDeleted = deleteWeather($_POST['weatherId']);
         $json = ['deleted' => $isDeleted];
 
+    } elseif ($_POST['mode'] == 'add_city') {
+        
+        $nbCityAdded = $_POST['nbCityAdded'];
+        $dataCityId = ' data-cityid="'.$nbCityAdded.'"';
+        ob_start();
+?>
+        <div class="row"<?=$dataCityId?>>
+            <div class="col"<?=$dataCityId?>><input type="text" name="city_label" id="city_label" value=""></div>
+            <div class="col"<?=$dataCityId?>><input type="text" name="country" id="country" value=""></div>
+            <div class="col"<?=$dataCityId?>><?= date("Y-m-d H:i:s")?></div>
+            <div class="col">
+                <button type="button" name="btn-save-city" id="btn-save-city" class="btn btn-save"<?=$dataCityId?>>Ajouter</button> 
+                <button type="button" name="btn-delete-city" id="btn-delete-city" class="btn btn-delete"<?=$dataCityId?>>Supprimer</button> 
+            </div>
+        </div>
+<?php
+        $html .= ob_get_contents();
+        ob_clean();
+        $json = [
+            "html" => $html,
+        ];
     } elseif ($_POST['mode'] == 'get_weather') {
         
         // Liste de la météo par ville
