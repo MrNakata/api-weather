@@ -95,10 +95,10 @@ function addCity () {
 function deleteCity (int $cityId) {
     global $pdo;
     if ($cityId == null) return false;
-    $delete = $pdo->prepare("DELETE FROM city WHERE city_id = :city_id");
+    $delete = $pdo->prepare("DELETE FROM weather WHERE city_id = :city_id");
     $delete->bindValue(":city_id", $cityId, PDO::PARAM_INT);
     $delete->execute();
-    $delete = $pdo->prepare("DELETE FROM weather WHERE city_id = :city_id");
+    $delete = $pdo->prepare("DELETE FROM city WHERE city_id = :city_id");
     $delete->bindValue(":city_id", $cityId, PDO::PARAM_INT);
     $delete->execute();
     return $delete->rowCount() > 0;
