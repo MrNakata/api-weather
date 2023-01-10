@@ -1,0 +1,99 @@
+<?php
+/**
+ * AJAX
+ */
+
+$json = [];
+if (isset($_POST['mode'])) {
+    require_once("include/fonctions.inc.php");
+
+    if ($_POST['mode'] == 'get_cities') {
+        ob_start();
+?>
+        <option value="">-- sélectionner une ville --</option>
+        <?php
+        $select = ob_get_contents();
+        ob_clean();
+        
+        // Liste des villes
+        $tCities = getCities();
+        
+        // Création de l'affichage
+        foreach ($tCities as $city) {
+            ob_start();
+?>
+            <option value="<?=$city['city_id']?>"><?=$city['city_label']?></option>
+<?php
+            $select .= ob_get_contents();
+            ob_clean();
+            $dataCityId = 'data-cityid="'.$city['city_id'].'"';
+            ob_start();
+?>
+            <div class="row"<?=$dataCityId?>>
+                <div class="col"<?=$dataCityId?>><?=$city['city_label']?></div>
+                <div class="col"<?=$dataCityId?>><?=$city['country']?></div>
+                <div class="col"<?=$dataCityId?>><?=$city['CREATION_DATE']?></div>
+                <div class="col">
+                    <button type="button" name="btn-edit-city" id="btn-edit-city" class="btn btn-edit"<?=$dataCityId?>>Modifier</button> 
+                    <button type="button" name="btn-delete-city" id="btn-delete-city" class="btn btn-delete"<?=$dataCityId?>>Supprimer</button> 
+                </div>
+            </div>
+<?php
+            $html .= ob_get_contents();
+            ob_clean();
+        }
+        $json = [
+            "html" => $html,
+            "list" => $select,
+            "post" => $_POST,
+        ];
+
+    } elseif ($_POST['mode'] == 'delete_city') {
+        // Suppression d'une ville et des fiches météos liées
+        $isDeleted = deleteCity($_POST['cityId']);
+        $json = ['deleted' => $isDeleted];
+        
+    } elseif ($_POST['mode'] == 'delete_weather') {
+        // Suppression d'une fiche météo
+        $isDeleted = deleteWeather($_POST['weatherId']);
+        $json = ['deleted' => $isDeleted];
+
+    } elseif ($_POST['mode'] == 'get_weather') {
+        
+        // Liste de la météo par ville
+        $tCityWeather = getCityWeather($_POST['cityId']);
+        ob_clean();
+        if (count($tCityWeather)>0) {
+            foreach ($tCityWeather as $weather) {
+                $dataWeatherId = 'data-weatherid="'.$weather['weather_id'].'"';
+                ob_start();
+                ?>
+                    <div class="row"<?=$dataWeatherId?>>
+                        <div class="col"><?=$weather['temperature']?></div>
+                        <div class="col"><?=$weather['weather']?></div>
+                        <div class="col"><?=$weather['precipitation']?></div>
+                        <div class="col"><?=$weather['humidity']?></div>
+                        <div class="col"><?=$weather['wind']?></div>
+                        <div class="col">
+                            <button type="button" name="btn-delete" id="btn-delete" class="btn btn-delete"<?=$dataWeatherId?>>Supprimer</button>
+                        </div>
+                    </div>
+<?php
+                $html .= ob_get_contents();
+                ob_clean();
+            }
+        } else {
+            ob_start();
+?>
+            <div class="col">Aucune donnée</div>
+<?php
+            $html .= ob_get_contents();
+            ob_clean();
+        }
+        $json = [
+            "html" => $html,
+        ];
+    }
+    
+}
+echo json_encode($json);
