@@ -25,6 +25,17 @@ switch($_SERVER["REQUEST_METHOD"]) {
             addCity();
         }
         break;
+        
+    case 'DELETE':
+        // Suppression d"une ville
+        if (strpos($_SERVER['REQUEST_URI'], "weather") !== false) {
+            $weatherId = getUrlId('weather');
+            deleteWeather($weatherId);
+        } else {
+            $cityId = getUrlId('cities');
+            deleteCity($cityId);
+        }
+        break;
 
     default:
         break;
