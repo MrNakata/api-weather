@@ -84,3 +84,6 @@ main > div  {
     color: #333;
     background-color: #ffb12a;
 }
+input[type=text] {
+    max-width: 80px;
+}
