@@ -27,8 +27,8 @@ body {
 .row:hover:not(.header) {
     background-color: lightgray !important;
 }
-.row:nth-child(odd):not(.header) {
-    background-color: #eeeeee;
+.row {
+    border-bottom: 1px solid #eeeeee;
 }
 .col {
     padding: .5rem;
@@ -38,8 +38,7 @@ body {
 .header {
     text-transform: uppercase;
     font-weight: bold;
-    background-color: grey;
-    color: #fff;
+    color: #0e309e;
 }
 main > h1 {
     text-align: center;
