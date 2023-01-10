@@ -83,18 +83,18 @@ if (isset($_POST['mode'])) {
     } elseif ($_POST['mode'] == 'add_weather') {
         
         $nbWeatherAdded = $_POST['nbWeatherAdded'];
-        $dataCityId  = ' data-cityid="'.$nbWeatherAdded.'"';
+        $dataWeatherId  = ' data-weatherid="'.$nbWeatherAdded.'"';
         ob_start();
 ?>
-       <div class="row"<?=$dataCityId?>>
+       <div class="row"<?=$dataWeatherId?>>
             <div class="col"><input type="text" name="temperature" id="temperature" value=""></div>
             <div class="col"><input type="text" name="weather" id="weather" value=""></div>
             <div class="col"><input type="text" name="precipitation" id="precipitation" value=""></div>
             <div class="col"><input type="text" name="humidity" id="humidity" value=""></div>
             <div class="col"><input type="text" name="wind" id="wind" value=""></div>
             <div class="col">
-                <button type="button" name="btn-save-weather" id="btn-save-weather" class="btn btn-save"<?=$dataCityId?>>Ajouter</button> 
-                <button type="button" name="btn-delete" id="btn-delete" class="btn btn-delete"<?=$dataCityId?> title="Cliquez pour supprimer cette ligne">x</button>
+                <button type="button" name="btn-save-weather" id="btn-save-weather" class="btn btn-save"<?=$dataWeatherId?>>Ajouter</button> 
+                <button type="button" name="btn-delete" id="btn-delete" class="btn btn-delete"<?=$dataWeatherId?> title="Cliquez pour supprimer cette ligne">x</button>
             </div>
         </div>
 <?php
