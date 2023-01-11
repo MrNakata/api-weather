@@ -49,6 +49,9 @@ $allCities.addEventListener("click", event => {
                 // Supprime la ligne uniquement
                 deleteCityRow(cityId)
             }
+        } else if (classNames.indexOf("btn-save") != -1) {
+            // Ajout d'une nouvelle ville
+            addCity(cityId);
         }
     }
 });
@@ -135,6 +138,31 @@ async function addWeatherRow () {
         $weatherCity.insertAdjacentHTML("afterBegin",json.html);
     })
     .catch(err => console.log(err));
+}
+/**
+ * Ajout d'une nouvelle ville en bdd
+ */
+async function addCity (cityId) {
+    if (cityId != undefined && cityId < 0) {
+        let cityLabel = document.getElementById("city-label"+cityId).value;
+        let country   = document.getElementById("country"+cityId).value;
+        let formData  = new FormData();
+        formData.append("mode", "add_city");
+        formData.append("city_label", cityLabel);
+        formData.append("country", country);
+        fetch('ajax.php', {
+            method: "POST",
+            body  : formData,
+        })
+        .then(response => response.json()) 
+        .then(json => {
+            console.log(json)
+            if(json.added) {
+                getCities();
+            }
+        })
+        .catch(err => console.log(err));
+    }
 }
 /**
  * Suppression d'une ville et des fiches météos liées

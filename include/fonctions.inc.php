@@ -94,12 +94,13 @@ function getWeatherHourText ($hour) {
  */
 function addCity () {
     global $pdo;
-    $country = $_POST['country'];
-    $label   = $_POST['label'];
-    $insert  = $pdo->prepare("INSERT INTO city (country, city_label, CREATION_DATE) VALUES (:country, :city_label: NOW())");
+    $country   = $_POST['country'];
+    $cityLabel = $_POST['city_label'];
+    $insert    = $pdo->prepare("INSERT INTO city (country, city_label, CREATION_DATE) VALUES (:country, :city_label , NOW())");
     $insert->bindValue(":country", $country, PDO::PARAM_STR);
-    $insert->bindValue(":city_label", $label, PDO::PARAM_STR);
+    $insert->bindValue(":city_label", $cityLabel, PDO::PARAM_STR);
     $insert->execute();
+    return $insert->rowCount() > 0;
 }
 /**
  * Suppression d'une ville et des fiches météos liées

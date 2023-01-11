@@ -59,6 +59,9 @@ if (isset($_POST['mode'])) {
         $json = ['deleted' => $isDeleted];
 
     } elseif ($_POST['mode'] == 'add_city') {
+        $json = [
+            'added' => addCity(),
+        ];
     } elseif ($_POST['mode'] == 'add_city_row') {
         
         $nbCityAdded = $_POST['nbCityAdded'];
@@ -66,8 +69,8 @@ if (isset($_POST['mode'])) {
         ob_start();
 ?>
         <div class="row"<?=$dataCityId?>>
-            <div class="col"<?=$dataCityId?>><input type="text" name="city_label" id="city_label" value=""></div>
-            <div class="col"<?=$dataCityId?>><input type="text" name="country" id="country" value=""></div>
+            <div class="col"<?=$dataCityId?>><input type="text" name="city_label" id="city-label<?=$nbCityAdded?>" value=""<?=$dataCityId?>></div>
+            <div class="col"<?=$dataCityId?>><input type="text" name="country" id="country<?=$nbCityAdded?>" value=""<?=$dataCityId?>></div>
             <div class="col"<?=$dataCityId?>><?= date("Y-m-d H:i:s")?></div>
             <div class="col">
                 <button type="button" name="btn-save-city" id="btn-save-city" class="btn btn-save"<?=$dataCityId?>>Ajouter</button> 
