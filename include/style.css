@@ -88,7 +88,9 @@ main > div  {
     color: #ea990e;
     background-color: #fff;
 }
-input[type=text] {
+input[type=text],
+input[type=date],
+input[type=hour] {
     max-width: 80px;
 }
 select {
