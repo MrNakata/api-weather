@@ -76,6 +76,20 @@ function getCityWeather (int $cityId):array {
     return $tDatas;
 }
 /**
+ * Renvoie le texte de la période de la journée selon l'heure
+ * @param int $hour 
+ * @return string
+ */
+function getWeatherHourText ($hour) {
+    if ($hour <= 6) {
+        return 'MATIN';
+    } else if ($hour <= 12) {
+        return 'MIDI';
+    } else {
+        return 'SOIR';
+    }
+}
+/**
  * Ajout d'une nouvelle ville
  */
 function addCity () {
