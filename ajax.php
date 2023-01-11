@@ -59,6 +59,7 @@ if (isset($_POST['mode'])) {
         $json = ['deleted' => $isDeleted];
 
     } elseif ($_POST['mode'] == 'add_city') {
+    } elseif ($_POST['mode'] == 'add_city_row') {
         
         $nbCityAdded = $_POST['nbCityAdded'];
         $dataCityId = ' data-cityid="'.$nbCityAdded.'"';
@@ -80,7 +81,7 @@ if (isset($_POST['mode'])) {
             "html" => $html,
         ];
 
-    } elseif ($_POST['mode'] == 'add_weather') {
+    } elseif ($_POST['mode'] == 'add_weather_row') {
         
         $nbWeatherAdded = $_POST['nbWeatherAdded'];
         $dataWeatherId  = ' data-weatherid="'.$nbWeatherAdded.'"';

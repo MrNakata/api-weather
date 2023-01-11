@@ -106,7 +106,7 @@ var nbCityAdded = 0;
  */
 async function addCityRow () {
     let formData = new FormData();
-    formData.append("mode", "add_city");
+    formData.append("mode", "add_city_row");
     formData.append("nbCityAdded", --nbCityAdded);
     fetch('ajax.php', {
         method: "POST",
@@ -124,7 +124,7 @@ var nbWeatherAdded = 0;
  */
 async function addWeatherRow () {
     let formData = new FormData();
-    formData.append("mode", "add_weather");
+    formData.append("mode", "add_weather_row");
     formData.append("nbWeatherAdded", --nbWeatherAdded);
     fetch('ajax.php', {
         method: "POST",
