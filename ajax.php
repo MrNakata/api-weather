@@ -32,7 +32,7 @@ if (isset($_POST['mode'])) {
             <div class="row"<?=$dataCityId?>>
                 <div class="col"<?=$dataCityId?>><?=$city['city_label']?></div>
                 <div class="col"<?=$dataCityId?>><?=$city['country']?></div>
-                <div class="col"<?=$dataCityId?>><?=$city['CREATION_DATE']?></div>
+                <div class="col"<?=$dataCityId?>><?=date('d/m/Y H:i', strtotime($city['CREATION_DATE']))?></div>
                 <div class="col">
                     <button type="button" name="btn-edit-city" id="btn-edit-city" class="btn btn-edit"<?=$dataCityId?>>Modifier</button> 
                     <button type="button" name="btn-delete-city" id="btn-delete-city" class="btn btn-delete"<?=$dataCityId?> title="Cliquez pour supprimer cette ligne">x</button> 
@@ -92,6 +92,7 @@ if (isset($_POST['mode'])) {
             <div class="col"><input type="text" name="precipitation" id="precipitation" value=""></div>
             <div class="col"><input type="text" name="humidity" id="humidity" value=""></div>
             <div class="col"><input type="text" name="wind" id="wind" value=""></div>
+            <div class="col"><input type="date" name="date" id="date" value="<?= date("Y-m-d")?>"></div>
             <div class="col">
                 <button type="button" name="btn-save-weather" id="btn-save-weather" class="btn btn-save"<?=$dataWeatherId?>>Ajouter</button> 
                 <button type="button" name="btn-delete" id="btn-delete" class="btn btn-delete"<?=$dataWeatherId?> title="Cliquez pour supprimer cette ligne">x</button>
@@ -109,11 +110,15 @@ if (isset($_POST['mode'])) {
         $tCityWeather = getCityWeather($_POST['cityId']);
         ob_clean();
         if (count($tCityWeather)>0) {
+            $tDates = [];
+            $tmpDate = '';
             foreach ($tCityWeather as $weather) {
                 $dataWeatherId = 'data-weatherid="'.$weather['weather_id'].'"';
                 ob_start();
                 ?>
                     <div class="row"<?=$dataWeatherId?>>
+                        <div class="col"><?=date('d/m/Y', strtotime($weather['date']))?></div>
+                        <div class="col"><?=getWeatherHourText(date('H', strtotime($weather['date'])))?></div>
                         <div class="col"><?=$weather['temperature']?></div>
                         <div class="col"><?=$weather['weather']?></div>
                         <div class="col"><?=$weather['precipitation']?></div>

@@ -25,9 +25,11 @@
             <div class="container border">
                 <h2>Prévisions météorologiques par ville <button type="button" name="btn-add-weather" id="btn-add-weather" class="btn btn-add" title="Ajouter une nouvelle fiche météo">+</button> <select name="select-city" id="select-city"></select></h2>
                 <div class="row header">
-                    <div class="col">Température</div>
+                    <div class="col">Date</div>
+                    <div class="col">Heure</div>
+                    <div class="col">°C</div>
                     <div class="col">Temps</div>
-                    <div class="col">Précipitations</div>
+                    <div class="col">Précip.</div>
                     <div class="col">Humidité</div>
                     <div class="col">Vent</div>
                     <div class="col">Actions</div>
