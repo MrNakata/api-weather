@@ -82,6 +82,11 @@ main > div  {
 .btn-save {
     color: #333;
     background-color: #ffb12a;
+    border: 1px solid #ffb12a;
+}
+.btn-save:hover {
+    color: #ea990e;
+    background-color: #fff;
 }
 input[type=text] {
     max-width: 80px;
