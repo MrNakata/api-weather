@@ -56,11 +56,11 @@ main > div  {
     transition: .3s;
     border-style: unset;
 }
-.btn-edit {
+.btn-save {
     background-color: #27c9d6;
     border: 1px solid #27c9d6;
 }
-.btn-edit:hover {
+.btn-save:hover {
     background-color: #fff;
     color: #27c9d6;
 }
@@ -79,21 +79,13 @@ main > div  {
     padding-top: 7px;
     padding-bottom: 7px;
 }
-.btn-save {
-    color: #333;
-    background-color: #ffb12a;
-    border: 1px solid #ffb12a;
-}
-.btn-save:hover {
-    color: #ea990e;
-    background-color: #fff;
-}
-input[type=text],
+
+input[type=number],
 input[type=date],
-input[type=hour] {
+select {
     max-width: 80px;
 }
-select {
+#select-city {
     background-color: #2d5380;
     border: 1px solid #2d5380;
     border-radius: 24px;

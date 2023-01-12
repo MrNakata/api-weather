@@ -34,7 +34,6 @@ if (isset($_POST['mode'])) {
                 <div class="col"<?=$dataCityId?>><?=$city['country']?></div>
                 <div class="col"<?=$dataCityId?>><?=date('d/m/Y H:i', strtotime($city['CREATION_DATE']))?></div>
                 <div class="col">
-                    <button type="button" name="btn-edit-city" id="btn-edit-city" class="btn btn-edit"<?=$dataCityId?>>Modifier</button> 
                     <button type="button" name="btn-delete-city" id="btn-delete-city" class="btn btn-delete"<?=$dataCityId?> title="Cliquez pour supprimer cette ligne">x</button> 
                 </div>
             </div>
