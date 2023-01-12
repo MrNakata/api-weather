@@ -6,8 +6,22 @@ getCities();
  * Récup de toutes les villes
  */
 async function getCities () {
+    fetch('http://localhost/ringover/cities', {
+        method: "GET",
+    })
+    .then(response => response.json()) 
+    .then(json => {
+        getCitiesHtml(json);
+    })
+    .catch(err => console.log(err));
+}
+/**
+ * Récup l'affichage de toutes les villes
+ */
+async function getCitiesHtml (json) {
     let formData = new FormData();
     formData.append("mode", "get_cities");
+    formData.append("tCities", JSON.stringify(json));
     fetch('ajax.php', {
         method: "POST",
         body  : formData,
@@ -66,6 +80,8 @@ $weatherCity.addEventListener("click", event => {
         } else {
             deleteWeatherRow(weatherId);
         }
+    } else if (classNames.indexOf("btn-save") != -1) {
+        addWeather(weatherId, $this.dataset.cityid);
     }
 })
 /**
@@ -73,19 +89,32 @@ $weatherCity.addEventListener("click", event => {
  */
 async function getWeather (cityId) {
     if (cityId != undefined) {
-        let formData = new FormData();
-        formData.append("mode", "get_weather");
-        formData.append("cityId", cityId);
-        fetch('ajax.php', {
-            method: "POST",
-            body  : formData,
+        fetch('http://localhost/ringover/cities/'+cityId+'/weather', {
+            method: "GET",
         })
         .then(response => response.json()) 
         .then(json => {
-            $weatherCity.innerHTML = json.html;
+            getWeatherHtml(json);
         })
         .catch(err => console.log(err));
     }
+}
+/**
+ * Récup html de la météo d'une ville
+ */
+async function getWeatherHtml (json) {
+    let formData = new FormData();
+    formData.append("mode", "get_weather");
+    formData.append("tCityWeather", JSON.stringify(json));
+    fetch('ajax.php', {
+        method: "POST",
+        body  : formData,
+    })
+    .then(response => response.json()) 
+    .then(json => {
+        $weatherCity.innerHTML = json.html;
+    })
+    .catch(err => console.log(err));
 }
 /**
  * Clic sur un bouton Ajouter
@@ -126,9 +155,11 @@ var nbWeatherAdded = 0;
  * Création via ajax de la nouvelle ligne html
  */
 async function addWeatherRow () {
+    let cityId = document.getElementById("select-city").value;
     let formData = new FormData();
     formData.append("mode", "add_weather_row");
     formData.append("nbWeatherAdded", --nbWeatherAdded);
+    formData.append("cityId", cityId);
     fetch('ajax.php', {
         method: "POST",
         body  : formData,
@@ -150,15 +181,46 @@ async function addCity (cityId) {
         formData.append("mode", "add_city");
         formData.append("city_label", cityLabel);
         formData.append("country", country);
-        fetch('ajax.php', {
+        fetch('http://localhost/ringover/cities/', {
             method: "POST",
             body  : formData,
         })
         .then(response => response.json()) 
         .then(json => {
-            console.log(json)
-            if(json.added) {
-                getCities();
+            getCities();
+        })
+        .catch(err => console.log(err));
+    }
+}
+/**
+ * Ajout d'une nouvelle fiche météo en bdd
+ */
+async function addWeather (weatherId, cityId) {
+    if (weatherId != undefined && weatherId < 0) {
+        let date          = document.getElementById("date"+weatherId).value;
+        let hour          = document.getElementById("hour"+weatherId).value;
+        let temperature   = document.getElementById("temperature"+weatherId).value;
+        let weather       = document.getElementById("weather"+weatherId).value;
+        let precipitation = document.getElementById("precipitation"+weatherId).value;
+        let humidity      = document.getElementById("humidity"+weatherId).value;
+        let wind          = document.getElementById("wind"+weatherId).value;
+        let formData      = new FormData();
+        formData.append("mode", "add_weather");
+        formData.append("cityId", cityId);
+        formData.append("date", date+' '+hour);
+        formData.append("temperature", temperature);
+        formData.append("weather", weather);
+        formData.append("precipitation", precipitation);
+        formData.append("humidity", humidity);
+        formData.append("wind", wind);
+        fetch('http://localhost/ringover/cities/'+cityId+'/weather', {
+            method: "POST",
+            body  : formData,
+        })
+        .then(response => response.json()) 
+        .then(json => {
+            if (json.status == 200) {
+                getWeather(cityId);
             }
         })
         .catch(err => console.log(err));
@@ -172,13 +234,13 @@ async function deleteCity (cityId) {
         let formData = new FormData();
         formData.append("mode", "delete_city");
         formData.append("cityId", cityId);
-        fetch('ajax.php', {
-            method: "POST",
+        fetch('http://localhost/ringover/cities/'+cityId, {
+            method: "DELETE",
             body  : formData,
         })
         .then(response => response.json()) 
         .then(json => {
-            if (json.deleted) {
+            if (json.status == 200) {
                 // Supprime la ligne
                 deleteCityRow(cityId);       
             }

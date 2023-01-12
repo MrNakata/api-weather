@@ -132,23 +132,50 @@ function deleteWeather (int $weatherId) {
     return $delete->rowCount() > 0;
 }
 /**
- * Ajout d'une nouvelle ville
- * @param int $cityId
+ * Ajout d'une nouvelle fiche météo pour une ville
  */
-function addCityWeather (int $cityId) {
+function addCityWeather () {
     global $pdo;
+    $cityId        = $_POST['cityId'];
     $temperature   = $_POST['temperature'];
     $weather       = $_POST['weather'];
     $precipitation = $_POST['precipitation'];
     $humidity      = $_POST['humidity'];
     $wind          = $_POST['wind'];
-    $q = "INSERT INTO weather (city_id, temperature, weather, precipitation, humidity, wind, date) VALUES (:city_id, :temperature, :weather, :precipitation, :humidity, :wind, NOW())";
+    $date          = $_POST['date'];
+    $q = "INSERT INTO weather (city_id, temperature, weather, precipitation, humidity, wind, date) VALUES (:city_id, :temperature, :weather, :precipitation, :humidity, :wind, :date)";
     $insert  = $pdo->prepare($q);
     $insert->bindValue(":city_id", $cityId, PDO::PARAM_INT);
-    $insert->bindValue(":temperature", $temperature, PDO::PARAM_STR);
+    $insert->bindValue(":temperature", strval($temperature), PDO::PARAM_STR);
     $insert->bindValue(":weather", $weather, PDO::PARAM_STR);
-    $insert->bindValue(":precipitation", $precipitation, PDO::PARAM_STR);
-    $insert->bindValue(":humidity", $humidity, PDO::PARAM_STR);
+    $insert->bindValue(":precipitation", strval($precipitation), PDO::PARAM_STR);
+    $insert->bindValue(":humidity", strval($humidity), PDO::PARAM_STR);
     $insert->bindValue(":wind", $wind, PDO::PARAM_INT);
+    $insert->bindValue(":date", $date, PDO::PARAM_STR);
     $insert->execute();
+    return $insert->rowCount() > 0;
+}
+
+function getSelectHour ($weatherId) {
+    $tHourText = [
+        '06:00:00' => 'MATIN',
+        '12:00:00' => 'MIDI',
+        '16:00:00' => 'SOIR',
+    ];
+    $select = '<select name="hour" id="hour'.$weatherId.'">';
+    foreach ($tHourText as $hour => $text) {
+        $select .= '<option value="'.$hour.'">'.$text.'</option>';
+    }
+    $select .= '</select>';
+    return $select;
+}
+function getSelectWeather ($weatherId) {
+    $tWeatherText = ["SUNNY", "RAINY", "WINDY", "FOGGY", "SNOW", "HAIL", "SHOWER", "LIGHTNING", "RAINDBOW", "HURRICANE"];
+    asort($tWeatherText);
+    $select = '<select name="weather" id="weather'.$weatherId.'">';
+    foreach ($tWeatherText as $text) {
+        $select .= '<option value="'.$text.'">'.$text.'</option>';
+    }
+    $select .= '</select>';
+    return $select;
 }
