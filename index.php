@@ -10,7 +10,7 @@
 </head>
 <body>
     <main>
-        <h1>ringoweather - dashboard</h1>
+        <h1>ringoweather api - dashboard</h1>
         <div class="wrap">
             <div class="container border">
                 <h2>Toutes les villes <button type="button" name="btn-add-city" id="btn-add-city" class="btn btn-add" title="Ajouter une nouvelle ville">+</button></h2>
