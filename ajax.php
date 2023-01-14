@@ -78,6 +78,7 @@ if (isset($_POST['mode'])) {
         ob_start();
 ?>
        <div class="row"<?=$dataWeatherId?>>
+            <div class="col"></div>
             <div class="col"><input type="date" name="date" id="date<?=$nbWeatherAdded?>" value="<?=date("Y-m-d")?>" min="<?=date("Y-m-d")?>"></div>
             <div class="col"><?=getSelectHour($nbWeatherAdded)?></div>
             <div class="col"><input type="number" name="temperature" id="temperature<?=$nbWeatherAdded?>" value="0"></div>
@@ -109,6 +110,7 @@ if (isset($_POST['mode'])) {
                 ob_start();
                 ?>
                     <div class="row"<?=$dataWeatherId?>>
+                        <div class="col"><?=$weather->weather_id?></div>
                         <div class="col"><?=date('d/m/Y', strtotime($weather->date))?></div>
                         <div class="col"><?=getWeatherHourText(date('H', strtotime($weather->date)))?></div>
                         <div class="col"><?=$weather->temperature?></div>
