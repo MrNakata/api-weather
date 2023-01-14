@@ -15,6 +15,7 @@
             <div class="container border">
                 <h2>Toutes les villes <button type="button" name="btn-add-city" id="btn-add-city" class="btn btn-add" title="Ajouter une nouvelle ville">+</button></h2>
                 <div class="row header">
+                    <div class="col">ID</div>
                     <div class="col">Ville</div>
                     <div class="col">Pays</div>
                     <div class="col">Date de création</div>

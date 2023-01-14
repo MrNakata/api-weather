@@ -29,6 +29,7 @@ if (isset($_POST['mode'])) {
             ob_start();
 ?>
             <div class="row"<?=$dataCityId?>>
+                <div class="col"<?=$dataCityId?>><?=$city->city_id?></div>
                 <div class="col"<?=$dataCityId?>><?=$city->city_label?></div>
                 <div class="col"<?=$dataCityId?>><?=$city->country?></div>
                 <div class="col"<?=$dataCityId?>><?=date('d/m/Y H:i', strtotime($city->CREATION_DATE))?></div>
@@ -53,6 +54,7 @@ if (isset($_POST['mode'])) {
         ob_start();
 ?>
         <div class="row"<?=$dataCityId?>>
+            <div class="col"<?=$dataCityId?>></div>
             <div class="col"<?=$dataCityId?>><input type="text" name="city_label" id="city-label<?=$nbCityAdded?>" value=""<?=$dataCityId?>></div>
             <div class="col"<?=$dataCityId?>><input type="text" name="country" id="country<?=$nbCityAdded?>" value=""<?=$dataCityId?>></div>
             <div class="col"<?=$dataCityId?>><?= date("Y-m-d H:i:s")?></div>
